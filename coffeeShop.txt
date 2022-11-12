@@ -1,0 +1,98 @@
+
+public class CoffeeShop {
+    private String name;
+    private ArrayList<MenuItem> menu;
+    private ArrayList<String> orders;
+public CoffeeShop(String name, ArrayList<MenuItem> menu,ArrayList<String> orders)
+{
+this.name = name;
+this.menu = menu;
+this.orders = orders;
+}
+    public void addOrder(String itemName)
+    {
+
+        if(menu.contains(itemName))
+        {
+            orders.add(itemName);
+        }
+        else
+        {
+            System.out.println(itemName + "This item is currently unavailable!");
+        }
+    }
+  public void fulfillOrder()
+  {
+        if(orders.isEmpty()){System.out.println("All orders have been fulfilled!");}
+        else{System.out.println(orders.remove(0) +"is ready!");}
+  }
+
+  public ArrayList<String> listOders(){return orders;}
+
+  public double dueAmount()
+    {
+        double sum = 0;
+        for(MenuItem item : menu)
+        {
+            if(orders.contains(item.getItem()))
+                sum+=item.getPrice();
+        }
+        return sum;
+  }
+
+    public double cheapestItem()
+    {
+        double min = menu.get(0).getPrice();
+        int indx = 0;
+        for(int i = 0 ; i < menu.size(); i++)
+        {
+            if(menu.get(i).getPrice() < min)
+            {
+                min = menu.get(i).getPrice();
+                indx = i;
+            }
+        }
+        return menu.get(indx).getPrice();
+  }
+    public ArrayList<String> drinksOnly()
+    {
+        ArrayList<String> drinks = new ArrayList();
+        for(MenuItem item : menu)
+        {
+            if(item.getType().equals("drink"))
+            {
+                drinks.add(item.getItem());
+            }
+        }
+        return drinks;
+  }
+
+    public ArrayList<String> foodOnly()
+    {
+        ArrayList<String> foods = new ArrayList();
+        for(MenuItem item : menu)
+        {
+            if(item.getType().equals("food"))
+            {
+                foods.add(item.getItem());
+            }
+        }
+        return foods;
+  }
+}
+
+class MenuItem {
+private String item;
+private String type;
+private double price;
+
+public MenuItem(String item, String type, double price) {
+this.item = item;
+this.type = type;
+this.price = price;
+}
+
+public String getItem() { return item; }
+public String getType() { return type; }
+public double getPrice() { return price; }
+}
